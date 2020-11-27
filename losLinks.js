@@ -33,19 +33,21 @@ function getQueryVariable(target_var) {
   }
 }
 
-
+// 从href中拿关键信息
+//todo: 检查每个href=(*)处
 function losLinks(key_word)
 {
   console.log("=============> lose links ==========>");
+  //todo: 不只有a标签有href属性
   let _innerHtml = document.getElementsByTagName('a');
   for (let i=0; i<_innerHtml.length; i++)
   {
     let _link = _innerHtml[i].href;
     let _s = _link.indexOf(key_word);
+    //todo: 过滤_los参数自己本身带有key_word的链接
     if (_s != -1)
     {
       console.log(_link);
     }
   }
 }
-
