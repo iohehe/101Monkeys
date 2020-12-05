@@ -1,4 +1,4 @@
- // ==UserScript==
+// ==UserScript==
 // @name        jsSPY
 // @namespace   Violentmonkey Scripts
 // @match       *://*/*
@@ -11,24 +11,26 @@
 _banner = "======================== js SPY ===========================";
 console.log(_banner);
 
-black_list = ["backbone.queryparams","purl.js","jquery.xLazyLoader","V4FIRE","jquery.query-object","jquery-deparam","mootools"]
+black_list = ["backbone.queryparams","purl","jquery.xlazyloader","v4fire","jquery.query-object","jquery-deparam","mootools","jquery.sparkle"]
+
 var js_links = document.getElementsByTagName("script");
 
-var re = /[\'\"]([^\'\"]*)[\'\"]?/i;
 
 
 for (var i=0; i<js_links.length; i++)
 {
-  var _js = js_links[i].outerHTML.match(re)[0];
-  
-  var js_file = _js.split('/').pop().replace("\"","");
-  
-  for (var j=0; j<black_list.length; j++)
+  var _js = js_links[i].getAttribute("src");
+  if (_js)
   {
-    if (js_file.match(black_list[j]))
+    var js_file = _js.split('/').pop().replace("\"","");
+  
+    for (var j=0; j<black_list.length; j++)
     {
-      alert(js_file);
+      js_file = js_file.toLowerCase();
+      if (js_file.match(black_list[j]))
+      {
+        alert(js_file);
+      }
     }
   }
 }
-
