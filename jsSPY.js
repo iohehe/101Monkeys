@@ -4,7 +4,7 @@
 // @match       *://*/*
 // @grant       none
 // @version     1.0
-// @author      -
+// @author      iohex
 // @description detect JS file
 // ==/UserScript==
 

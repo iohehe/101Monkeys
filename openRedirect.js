@@ -3,8 +3,8 @@
 // @namespace   Violentmonkey Scripts
 // @match       *://*/*
 // @grant       none
-// @version     1.0
-// @author      -
+// @version     1.1
+// @author      iohex
 // @description Open Redirect Bug
 // ==/UserScript==
 
@@ -35,7 +35,9 @@ var reflected_redirections = [
 "return_to",
 "continue",
 "return_path",
-"path"
+"path",
+"call",
+"callback",
 ];
 
 
@@ -57,29 +59,36 @@ var dom_redirections = [
 "XMLHttpRequest.send()"
 ];
 
+
 var current_search = window.location.search.split('?')[1];
 var _searchs = current_search.split("&");
 for (var i=0; i<_searchs.length; i++)
 {
-  console.log("[param]====> "+_searchs[i]);
+  console.log("["+i+"]====> "+_searchs[i]);
   var _key = _searchs[i].split('=')[0];
   var _value = _searchs[i].split('=')[1];
-  if (validReflected(_key.toLowerCase()))
-  {
-    alert(_key);
-  }
+  validReflected(_key.toLowerCase(), _value.toLowerCase());
 }
 
-function validReflected(_key) {
+
+function validReflected(_key, _value) {
+        
+  if (_value.match("http"))
+  {
+      alert(_key+":"+_value);
+  }
+  
   for (var i=0; i<reflected_redirections.length; i++)
     {      
       if (_key.match(reflected_redirections[i]))
         {
-          return 1;
-        }
-      else
-        {
-          return 0;
+              //alert(_key);
+              console.log(
+                    '%c url here: '+_key,  // Console Message
+                    'color: green' // CSS Style
+                          );
         }
     }
 }
+
+console.log("end open Redirect <=========");
